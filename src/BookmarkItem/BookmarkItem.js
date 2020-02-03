@@ -29,7 +29,7 @@ export default function BookmarkItem(props) {
         </button>
         <button
           className='BookmarkItem__description'
-          onClick={props.onClickModify(props.id)}
+          onClick={() => props.onClickModify(props.id)}
         >
           Update
         </button>

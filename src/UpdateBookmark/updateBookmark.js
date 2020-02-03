@@ -13,18 +13,21 @@ class UpdateBookmark extends Component {
 
   state = {
     error: null,
-    currentBM: this.props.currentBM
+    title: this.props.currentBM.title,
+    url:this.props.currentBM.url,
+    description: this.props.currentBM.description,
+    rating: this.props.currentBM.rating
   };
 
   handleSubmit = e => {
     e.preventDefault()
     // get the form fields from the event
-    const { title, url, description, rating } = e.target
+    const { title, url, description, rating } = this.state
     const bookmark = {
-      title: title.value,
-      url: url.value,
-      description: description.value,
-      rating: rating.value,
+      title,
+      url,
+      description,
+      rating,
     }
     this.setState({ error: null })
     fetch(config.API_ENDPOINT, {
@@ -80,7 +83,8 @@ class UpdateBookmark extends Component {
               type='text'
               name='title'
               id='title'
-              value= {this.state.currentBM.title}
+              value= {this.state.title}
+              onChange= {() => this.setState({title: this.target})}
               required
             />
           </div>
@@ -94,7 +98,8 @@ class UpdateBookmark extends Component {
               type='url'
               name='url'
               id='url'
-              value= {this.state.currentBM.url}
+              value= {this.state.url}
+              onChange= {() => this.setState({url: this.target})}
               required
             />
           </div>
@@ -105,7 +110,8 @@ class UpdateBookmark extends Component {
             <textarea
               name='description'
               id='description'
-              value= {this.state.currentBM.description}
+              value= {this.state.description}
+              onChange= {() => this.setState({description: this.target})}
             />
           </div>
           <div>
@@ -118,7 +124,8 @@ class UpdateBookmark extends Component {
               type='number'
               name='rating'
               id='rating'
-              value= {this.state.currentBM.rating}
+              value= {this.state.rating}
+              onChange= {() => this.setState({rating: this.target})}
               min='1'
               max='5'
               required
