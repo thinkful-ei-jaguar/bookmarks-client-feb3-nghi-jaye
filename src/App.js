@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AddBookmark from './AddBookmark/AddBookmark';
+import UpdateBookmark from './UpdateBookmark/updateBookmark';
 import BookmarkList from './BookmarkList/BookmarkList';
 import Nav from './Nav/Nav';
 import config from './config';
@@ -34,6 +35,7 @@ class App extends Component {
     page: 'list',
     bookmarks,
     error: null,
+    currentEditBM: bookmarks[0]
   };
 
   changePage = (page) => {
@@ -53,6 +55,28 @@ class App extends Component {
       bookmarks: [ ...this.state.bookmarks, bookmark ],
     })
   }
+
+     updateBookmark = updatedBookmark => {
+
+         const newBookmarks = this.state.bookmarks.map(bm =>
+           (bm.id === updatedBookmark.id)
+             ? updatedBookmark
+             : bm
+         )
+         this.setState({
+           bookmarks: newBookmarks
+         })
+       }
+  
+  prepUpdateBookmark = currentID => {
+    const foundBM = this.state.bookmarks.find(bm => bm.id === currentID);
+    console.log(currentID)
+    this.setState({
+      page: 'update',
+      currentEditBM: foundBM
+    })
+  }
+
 
   componentDidMount() {
     fetch(config.API_ENDPOINT, {
@@ -85,9 +109,17 @@ class App extends Component {
               onClickCancel={() => this.changePage('list')}
             />
           )}
+           {page === 'update' && (
+            <UpdateBookmark
+              currentBM = {this.state.currentEditBM}
+              onClickUpdate={this.updateBookmark}
+              onClickCancel={() => this.changePage('list')}
+            />
+          )}
           {page === 'list' && (
             <BookmarkList
               bookmarks={bookmarks}
+              onClickModify={this.prepUpdateBookmark}
             />
           )}
         </div>

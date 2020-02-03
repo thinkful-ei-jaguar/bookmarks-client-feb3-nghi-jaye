@@ -3,6 +3,7 @@ import Rating from '../Rating/Rating';
 import './BookmarkItem.css';
 
 export default function BookmarkItem(props) {
+  console.log(props)
   return (
     <li className='BookmarkItem'>
       <div className='BookmarkItem__row'>
@@ -26,6 +27,13 @@ export default function BookmarkItem(props) {
         >
           Delete
         </button>
+        <button
+          className='BookmarkItem__description'
+          onClick={props.onClickModify(props.id)}
+        >
+          Update
+        </button>
+
       </div>
     </li>
   )

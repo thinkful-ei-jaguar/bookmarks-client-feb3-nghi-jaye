@@ -10,6 +10,7 @@ export default function Nav(props) {
       <button onClick={() => props.clickPage('add')}>
         Add Bookmark
       </button>
+
     </nav>
   );
 }
